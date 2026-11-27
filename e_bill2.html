@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>服務流程示範｜非官方教學原型</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #202b38;
+            background: #f3f6f9;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 20rem;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: #174f7a;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #d97706;
+            outline-offset: 3px;
+        }
+
+        .container {
+            width: min(100% - 2rem, 64rem);
+            margin-inline: auto;
+        }
+
+        .site-header {
+            background: #fff;
+            border-bottom: 1px solid #d6dee7;
+        }
+
+        .header-inner {
+            min-height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: inherit;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 2.5rem;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border: 2px solid #174f7a;
+            border-radius: 0.5rem;
+            color: #174f7a;
+            font-size: 1.25rem;
+        }
+
+        .header-note {
+            color: #526170;
+            font-size: 0.9rem;
+        }
+
+        .notice {
+            margin-block: 1rem;
+            padding: 1rem 1.125rem;
+            border: 2px solid #9a5700;
+            border-radius: 0.5rem;
+            background: #fff4d6;
+            color: #422b00;
+            line-height: 1.6;
+        }
+
+        .notice strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        main {
+            flex: 1;
+            padding-block: 1rem 2.5rem;
+        }
+
+        .eyebrow {
+            margin: 0 0 0.5rem;
+            color: #526170;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        h1,
+        h2,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            color: #173c59;
+            font-size: clamp(1.6rem, 5vw, 2rem);
+        }
+
+        .intro {
+            margin-bottom: 1.5rem;
+            color: #465564;
+            line-height: 1.65;
+        }
+
+        .progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 0 0 1.25rem;
+            padding: 0;
+            list-style: none;
+        }
+
+        .progress li {
+            padding: 0.75rem;
+            border: 1px solid #cbd5df;
+            border-radius: 0.5rem;
+            background: #fff;
+            color: #526170;
+            text-align: center;
+        }
+
+        .progress li[aria-current="step"] {
+            border-color: #174f7a;
+            background: #eaf3fa;
+            color: #173c59;
+            font-weight: 700;
+        }
+
+        .panel {
+            padding: clamp(1rem, 4vw, 1.5rem);
+            border: 1px solid #cbd5df;
+            border-radius: 0.625rem;
+            background: #fff;
+            box-shadow: 0 0.25rem 1rem rgb(23 60 89 / 8%);
+        }
+
+        .panel h2 {
+            margin-bottom: 0.75rem;
+            color: #173c59;
+            font-size: 1.25rem;
+        }
+
+        .panel p {
+            color: #465564;
+            line-height: 1.65;
+        }
+
+        .sample-table {
+            width: 100%;
+            margin-block: 1.25rem;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .sample-table th,
+        .sample-table td {
+            padding: 0.875rem;
+            border: 1px solid #d6dee7;
+            vertical-align: top;
+        }
+
+        .sample-table th {
+            width: 34%;
+            background: #f3f6f9;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            min-height: 2.875rem;
+            padding: 0.7rem 1.25rem;
+            border: 1px solid #174f7a;
+            border-radius: 0.375rem;
+            background: #174f7a;
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button.secondary {
+            background: #fff;
+            color: #174f7a;
+        }
+
+        .status {
+            min-height: 1.5rem;
+            margin: 1rem 0 0;
+            color: #465564;
+            text-align: center;
+        }
+
+        .site-footer {
+            padding-block: 1.25rem;
+            border-top: 1px solid #d6dee7;
+            background: #fff;
+            color: #465564;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .site-footer p {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 38rem) {
+            .header-inner {
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: center;
+                padding-block: 0.75rem;
+            }
+
+            .progress {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-table th,
+            .sample-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .sample-table td {
+                border-top: 0;
+            }
+
+            .sample-table tr + tr th {
+                border-top: 0;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#main">
+                <span class="brand-mark" aria-hidden="true">D</span>
+                <span>服務流程示範</span>
+            </a>
+            <span class="header-note">互動式教學原型</span>
+        </div>
+    </header>
+
+    <aside class="container notice" role="note" aria-label="重要聲明">
+        <strong>非官方教學示範，與任何政府、金融機構或服務業者均無關。</strong>
+        本頁只展示一般介面流程，不提供帳單查詢或付款。請勿輸入任何真實個人資料；
+        本示範沒有資料輸入欄位，也不會傳送或儲存你的資料。
+    </aside>
+
+    <main id="main" class="container">
+        <p class="eyebrow">EDUCATIONAL PROTOTYPE</p>
+        <h1>服務流程互動示範</h1>
+        <p class="intro">
+            使用虛構內容瀏覽三個介面步驟。範例不代表真實帳單、服務或交易。
+        </p>
+
+        <ol class="progress" aria-label="示範步驟">
+            <li id="progress-start" aria-current="step">1. 開始</li>
+            <li id="progress-sample">2. 虛構範例</li>
+            <li id="progress-end">3. 結束</li>
+        </ol>
+
+        <section id="step-start" class="panel" aria-labelledby="start-title">
+            <h2 id="start-title">開始示範</h2>
+            <p>
+                這是一個純前端的介面展示。按下按鈕只會切換到本頁內的虛構範例，
+                不會連線查詢、收集資料或執行任何交易。
+            </p>
+            <div class="actions">
+                <button type="button" data-next="sample">查看虛構範例</button>
+            </div>
+        </section>
+
+        <section id="step-sample" class="panel" aria-labelledby="sample-title" hidden>
+            <h2 id="sample-title">虛構範例明細</h2>
+            <p>以下資料僅為展示介面用途，不對應任何人、帳戶、帳單或實際服務。</p>
+            <table class="sample-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">示範項目</th>
+                        <td>範例服務（虛構）</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">示範編號</th>
+                        <td>DEMO-0001（非真實編號）</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">展示金額</th>
+                        <td>NT$ 0（不是應繳金額）</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">狀態</th>
+                        <td>介面展示中；沒有查詢或付款</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="actions">
+                <button type="button" class="secondary" data-next="start">返回</button>
+                <button type="button" data-next="end">結束示範</button>
+            </div>
+        </section>
+
+        <section id="step-end" class="panel" aria-labelledby="end-title" hidden>
+            <h2 id="end-title">示範已結束</h2>
+            <p>
+                本流程沒有查詢真實帳單、處理付款或產生收據。若需使用實際服務，
+                請自行確認服務業者的官方網站與網址。
+            </p>
+            <div class="actions">
+                <button type="button" data-next="start">重新觀看示範</button>
+            </div>
+        </section>
+
+        <p id="step-status" class="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>非官方、非營利教學原型；不提供金融、帳單查詢或付款服務。</p>
+        </div>
+    </footer>
+
+    <script>
+        const stepNames = ["start", "sample", "end"];
+        const stepLabels = {
+            start: "開始示範",
+            sample: "虛構範例",
+            end: "示範已結束"
+        };
+
+        function showStep(nextStep) {
+            for (const step of stepNames) {
+                document.getElementById(`step-${step}`).hidden = step !== nextStep;
+
+                const progressItem = document.getElementById(`progress-${step}`);
+                if (step === nextStep) {
+                    progressItem.setAttribute("aria-current", "step");
+                } else {
+                    progressItem.removeAttribute("aria-current");
+                }
+            }
+
+            document.getElementById("step-status").textContent = stepLabels[nextStep];
+            document.getElementById(`step-${nextStep}`).querySelector("h2").focus();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.querySelectorAll("button[data-next]").forEach((button) => {
+            button.addEventListener("click", () => showStep(button.dataset.next));
+        });
+
+        document.querySelectorAll("main section h2").forEach((heading) => {
+            heading.tabIndex = -1;
+        });
+    </script>
+</body>
+</html>
