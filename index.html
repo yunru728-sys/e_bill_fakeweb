@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Bill全國繳費網</title>
+    <link href="/Content/css?v=7dBmgfdsRZP7a5c0qJ4rImAOm6ghK9YTnSkEfmkse941" rel="stylesheet"/>
+
+    <script src="/bundles/modernizr?v=wBEWDufH_8Md-Pbioxomt90vm6tJN2Pyy9u9zHtWsPo1"></script>
+
+    
+    <link rel="stylesheet" href="/Content/detail.css">
+    <link rel="stylesheet" href="/Content/base.css">
+    <link rel="stylesheet" href="/Content/rwd.css">
+    <link rel="shortcut icon" href="/Content/Images/e-icon.png">
+</head>
+<body class="layout">
+    <noscript><p class="tip">您的瀏覽器不支援JavaScript功能，若網頁功能無法正常使用時，請開啟瀏覽器 JavaScript 為可使用狀態</p></noscript>
+    <a href="#Accesskey_C" class="to_content" title="跳到主要內容區塊">跳到主要內容區塊</a>
+    <nav class="navbar navbar-expand-md navbar-light bg-light header">  
+    
+        <div class="container">
+        <h1 class="logo"><a href="/" title="返回 e-Bill全國繳費網 首頁"><img src="/Content/Images/e-Bill_logo.svg" alt="">e-Bill全國繳費網</a></h1>
+        <div class="navbar-header">
+            <a class="btn-bills-search btn-magnifier" href="#" title="費用搜尋">費用搜尋</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+        </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                 <ul class="navbar-nav mx-2 mb-lg-0 flex-row topnav">
+                    <li><a id="Accesskey_U" href="#Accesskey_U" title="上方選單區" accesskey="U">:::</a></li>
+                    <li><a href="/" title="回首頁">回首頁</a></li>
+                    <li><a href='/Home/HtmlView/SiteMap' title="網站導覽">網站導覽</a></li>
+                    <li><a href='/Home/HtmlView/PROBLEM' title="問題與協助">問題與協助</a></li>
+                    <li class="mobile-none"><a href='/Home/HtmlView/CHCEK' title="自我環境檢測">自我環境檢測</a></li>
+                    <li><a href='/Home/HtmlView/LIMIT' title="繳費限額">繳費限額</a></li>
+                    <li class="search_btn mobile-none"><a class="btn-bills-search" href="#" title="費用搜尋">費用搜尋</a></li>
+
+
+                    <!-- <li><a href='/Others/Home/SiteMap'>網站導覽</a></li>
+                    <li><a href="/Others/Home/HtmlView/PROBLEM">問題與協助</a></li>
+                    <li class="mobile-none"><a href="/Others/Home/HtmlView/CHCEK">自我環境檢測</a></li>
+                    <li><a href="/Others/Home/HtmlView/LIMIT">繳費限額</a></li>
+                    <li class="search_btn mobile-none"><a class="btn-bills-search" href="#">費用搜尋</a></li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+    <script src="/bundles/jquery?v=w2NV88ejH393Qgr2kF3iYmzZy7OShxWHkeMyrLC_cfs1"></script>
+
+    <script src="/bundles/bootstrap?v=_mDavOGPOJu-UXT_O4EcrTr3fBj2XXZKV6buIGUrSLM1"></script>
+
+    
+<!--Checkmarx 2020 Reflected XSS All Clients-->
+
+<div class="container-fluid billsearch">
+    <div class="container">
+        <label for="SearchName">費用搜尋</label>
+        <input class="billfi text-box single-line" id="SearchName" name="SearchName" placeholder="請輸入關鍵字" title="輸入關鍵字後，請使用上、下方向鍵進行項目瀏覽，再以TAB鍵選取後跳轉至該繳費頁" type="text" value="" />
+        <a href="#" class="billfi_btn">送出</a>
+    </div>
+</div>
+
+<form action="/Others/ETag" id="ETag" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="k27VIl_wwspUZSaf76efF_s_qBs9rwq6xO7e7ncQWNO9Np3zp9NE7nyMbkWn_FxGPozSFbXP9SWfgp0N0a_EsHUOOT6hy7F6yYHOncHMta41" />    <div class="container-fluid billtitle">
+        <a href="#Accesskey_C" id="Accesskey_C" accesskey="C" title="中間主要內容區，此區塊呈現網頁的網頁內容">:::</a>
+        <div class="container">
+            <div class="box2"><img src="/Content/Images/bill-icon05.svg" alt=""></div>
+            <h2 class="title_n">
+                國道高速公路交通資費
+            </h2>
+        </div>
+    </div>
+    <div class="container-fluid paynote">
+        <div class="container">
+            <h5>相關說明</h5>
+            <div class="notelist">
+                <ul>
+                    <li>流程進度 : 輸入繳費資訊 > 確認頁 > 繳費交易結果</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid paybill">
+        <div class="container">
+            <h5>待繳費用查詢</h5>
+            <div class="keyinData">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3"><label for="pageInfo_ETagInfo_CarNo">車牌號碼<span class="red">(必填)</span></label></div>
+                    <div class="col-xs-12 col-sm-8 col-md-3">
+                        <input id="pageInfo_ETagInfo_CarNo" maxlength="8" name="pageInfo.ETagInfo.CarNo" onblur="CarNo(&quot;pageInfo_ETagInfo_CarNo&quot;);" type="text" value="" />
+                        
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        (車牌號碼請依您的車牌格式<strong style=color:blue;font-weight:bold>完整</strong>輸入，註：需包含<strong style=color:blue;font-weight:bold>"-"</strong>
+                        符號及文字，如: <strong style=color:blue;font-weight:bold>AB-2468、135-AB、使-123。</strong>)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3"><label for="pageInfo_ETagInfo_IdnBan">用戶證號<span class="red">(必填)</span></label></div>
+                    <div class="col-xs-12 col-sm-8 col-md-3">
+                        <input id="pageInfo_ETagInfo_IdnBan" maxlength="11" name="pageInfo.ETagInfo.IdnBan" onblur="IDNoCheck(&quot;pageInfo_ETagInfo_IdnBan&quot;);" type="text" value="" />
+                        
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">(此即車牌號碼持有人(法人)的身分證字號(統一編號))</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">手續費說明</div>
+                    <div class="col-xs-12 col-sm-8 col-md-9">
+                        <!--Checkmarx 2020 Reflected XSS All Clients-->
+                        非約定活期性存款帳戶繳款，限繳本人帳單，手續費 3 元 <br />使用晶片金融卡，手續費 3 元
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">注意事項</div>
+                    <div class="col-xs-12 col-sm-8 col-md-9">
+                        本繳費網不適用疫情期間減免ATM跨行轉帳手續費措施，本交易如有手續費，仍須自行負擔。
+                    </div>
+                </div>
+
+                <div class="keyinData">
+                    <div class="row">
+                        <div class="col -xs-12 col-sm-4 col-md-3">動態圖像驗證碼<span class="red">(必填)</span></div>
+                        <div class="col -xs-12 col-sm-8 col-md-4">
+                            <div class="codezone">
+                                <div class="code">
+                                    <img id="ValidateImage" alt="驗證碼圖片" title="驗證碼圖片" src="/Others/ETag/VerificationCode" />
+                                </div>
+                                <div>
+                                    <a id="P_voice" href="#" target="Voice" class="play_btn">播放驗證碼</a>
+                                </div>
+                                <audio id="myspech" src="" type="audio/mepeg">
+                                </audio>
+                                <a id="ValidateNum" name="ValidateNum" href="#" onclick="ValidateReload();">重新產生</a>
+                            </div>
+                            <div>
+                                請輸入上圖中您所看到的數字 <a href="#" onclick="return popContent('OTPDesc');">說明</a>
+                                <input MaxLength="6" id="enterCode" name="enterCode" title="驗證碼輸入框" type="text" value="" />
+                                <input id="enterCode" name="enterCode" type="hidden" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reminder" style="display:none;"></div>
+
+
+                <div class="btnzone">
+                    <button class="btn-style03" type="button" onclick="backFunction();" aria-label="回上一頁">回上一頁</button>
+                        <button class="btn-style04" type="button" onclick="submitFunction();" aria-label="確認送出">確認送出</button>
+                    <input id="action" name="action" type="hidden" value="" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="SelectName" id="SelectName" />
+    <input type="hidden" name="PayPageId" id="PayPageId" />
+    <div id="LoadPnl" class="loading" style="background-color:rgba(0,0,0,0.4);">
+    </div>
+<script src="/Scripts/PageScript.js"></script>
+<script src="/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="/Content/jquery-ui.min.css">
+    <script>
+        $(document).ready(function () {
+            //顯示費用搜尋
+            $(".billsearch").hide();
+            $(".btn-bills-search").click(function () {
+                $(".billsearch").slideToggle("slow");
+            });
+
+            $("#SearchName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Home/Index",
+                        type: "POST",
+                        dataType: "json",
+                        data: { Prefix: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                if (item.BillerId == "") {
+                                    return { label: item.FeeName, value: item.PayPageId };
+                                }
+                                else {
+                                    return { label: item.FeeName, value: item.PayPageId };
+                                }
+                            }))
+
+                        }
+                    })
+                },
+                select: function (e, ui) {
+                    $("#SearchName").val(ui.item.label);
+                    $("#SelectName").val(ui.item.label);
+                    $("#PayPageId").val(ui.item.value);
+                    document.getElementById("action").value = "Query";
+                    document.getElementById("ETag").submit();
+                    return false;
+                },
+                focus: function (e, ui) {
+                    $("#SearchName").val(ui.item.label);
+                    return false;
+                },
+                messages: {
+                    noResults: "沒有符合的項目", results: "",
+                    results: function (resultsCount) { }
+                }
+            });
+
+            $('.billfi_btn').on('click', function(e, ui){
+                var SearchName = $('#SearchName').val();
+                if(SearchName=="")
+                {
+                    alert('請選擇關鍵字')
+                    $('#SearchName').focus();
+                    return false;
+                }
+                $.ajax({
+                        url: "/Home/Index",
+                        type: "POST",
+                        dataType: "json",
+                        data: { Prefix: SearchName },
+                        success: function (data) {
+                            //console.log(data);
+                            if(data.length==0)
+                            {
+                                    alert('找不到關鍵字')
+                                    $('#SearchName').focus();
+                                    return false;
+                            }
+                            $("#SearchName").val(data[0].FeeName);
+                            $("#SelectName").val(data[0].FeeName);
+                            $("#PayPageId").val(data[0].PayPageId);
+                                // console.log(data[0].PayPageId+""+data[0].FeeName);
+                            $.map(data, function (item) {
+                                if (item.BillerId == "") {
+                                    return { label: item.FeeName, value: item.PayPageId };
+                                }
+                                else {
+                                    return { label: item.FeeName, value: item.PayPageId };
+                                }
+
+                            });
+                            document.getElementById("action").value = "Query";
+                            document.getElementById("ETag").submit();
+                        }
+                })
+            });
+        });
+        
+  $("#P_voice").click(function(){
+    var d = new Date();
+        var randomNumber = Math.floor(Math.random());
+     var url= '/Others/ETag/PlayVoice?rdnNum=_randomNumber_'.replace("_randomNumber_", d.getTime())
+      var audio=document.getElementById("myspech");
+      audio.src=url;
+       audio.load();
+       audio.play();
+return false;
+   })
+        function ValidateReload() {
+            var d = new Date();
+            var randomNumber = Math.floor(Math.random());
+            var newUrl = '/Others/ETag/VerificationCode?randomNumber=_randomNumber_'.replace("_randomNumber_", d.getTime());
+        $("#ValidateImage").attr("src", newUrl);
+            return false;
+        }
+
+
+       var alertMsg = '';
+        if (alertMsg != '') {
+            $(".reminder").html(alertMsg);
+            var mesErr=alertMsg.split('請')[0];
+             alert("*"+alertMsg.replace("&lt;br /&gt;","\n"));
+            if(mesErr.indexOf("用戶證號")!=-1)
+            {      
+                $("#pageInfo_ETagInfo_IdnBan").focus();
+            }
+            else{
+                 $("#pageInfo_ETagInfo_CarNo").focus();
+            }
+        }
+
+        function submitFunction() {
+            var m_msg ="";
+            var m_msg2="";
+            var m_msg3="";
+            if (document.getElementById("pageInfo_ETagInfo_CarNo").value == "") {
+                m_msg = "*請輸輸入車牌號碼\n";
+                m_msg2="pageInfo_ETagInfo_CarNo";
+            }
+            if (document.getElementById("pageInfo_ETagInfo_IdnBan").value == "") {
+                m_msg += "*請輸入用戶證號\n";
+                m_msg3="pageInfo_ETagInfo_IdnBan";
+            }
+            if (document.getElementById("enterCode").value == "") {
+                m_msg += "*請輸入驗證碼\n";
+
+            }
+            if (m_msg != "") {
+                $(".reminder").html(m_msg);
+                alert(m_msg);
+                if (m_msg2 != "") {
+                    $('#' + m_msg2).focus();
+                }
+                else if (m_msg3 != "") {
+                    $('#' + m_msg3).focus();
+                }
+                else {
+                 document.getElementById("enterCode").focus();
+                }
+                return false;
+            }
+            
+            document.getElementById("LoadPnl").style.display = "block";
+            document.getElementById("action").value = "NEXT";
+            document.getElementById("ETag").submit();
+        }
+
+        function backFunction() {
+            document.getElementById("LoadPnl").style.display = "block";
+            document.getElementById("action").value = "BACK";
+            document.getElementById("ETag").submit();
+        }
+       var IsCheck=true;
+        function CarNo(inputName) {
+            var checkData = document.getElementById(inputName).value;
+            var checkName = inputName;
+            
+            if (checkData != "") {
+                try {
+                    //Regular expression Testing
+                    carNoRule = /^[外使軍試臨0-9a-zA-Z]{1,6}-[A-Za-z0-9]{1,6}$/;
+
+                    var result = checkData.search(carNoRule);
+                    if (parseInt(result) == -1) {
+                        if(IsCheck)
+                        {
+                        $(".reminder").text("*請輸入正確車牌號碼格式");
+                        $('#'+checkName).focus();
+                        alert("*請輸入正確車牌號碼格式");
+                        }
+                       
+                    }
+                    IsCheck=!IsCheck;
+                }
+                catch (err) {
+                    $(".reminder").text("*請輸入正確車牌號碼格式");
+                    alert("*請輸入正確車牌號碼格式");
+                    //$('#'+checkName).focus();
+                }
+            }
+        }
+    </script>
+</form>
+
+
+    <script>
+        var title_n = $('.title_n').text();
+        //console.log(title_n);
+        $(document).attr('title',title_n + ' e-Bill全國繳費網')
+        var loga=$(".logo a")
+         if(title_n.trim()=="電信號碼輸入範例")
+         {
+            loga.attr("href","#")
+            loga.attr("title","e-Bill全國繳費網")
+         }
+        if( location.href.indexOf('/HtmlView/') > -1 || location.href.indexOf('/FeedBack') > -1 ){
+            $('.search_btn').hide();
+        }
+
+    </script>
+
+    <div class="container-fluid footer">
+        <div class="container">
+            <a href="#Accesskey_Z" id="Accesskey_Z" accesskey="Z" title="頁尾網站資訊">:::</a>
+            <ul class="footernav clearfix">
+                <li><a href="/Others/Home/HtmlView/URL_BA_ORG" target="_blank"title="中華民國銀行公會(另開新視窗)"><img src="/Content/Images/bank-logo.png" alt="中華民國銀行公會"></a></li>
+                <li><a href="/Others/Home/HtmlView/ABOUT_EBILL" target="_blank" title="關於e-Bill(另開新視窗)">關於e-Bill</a></li>
+                <li><a href="/Others/Home/HtmlView/PRIVACY_STATEMENT" target="_blank" title="隱私權聲明(另開新視窗)">隱私權聲明</a></li>
+                <li><a href="/Others/Home/HtmlView/USE_STATEMENT" target="_blank" title="使用聲明(開新視窗)">使用聲明</a></li>
+                <li><a href="/Others/Home/HtmlView/PERSONAL_DATA" target="_blank" title="個人資料保護法告知義務內容(開新視窗)">個人資料保護法告知義務內容</a></li>
+                <li><a href="/Others/Home/HtmlView/NetworkSecurity" target="_blank" title="網路安全提醒(開新視窗)">網路安全提醒</a></li>
+            </ul>
+            <p>全國繳費網 版權所有 轉載必究 © 2016 ALL RIGHT RESERVED.  本網站委託財金資訊股份有限公司維運</p>
+            <p class="mobile-none">如有任何問題或建議請至<a href="/Others/Home/FeedBack" class="email" title="意見信箱">意見信箱</a>留下您寶貴的意見</p>                
+            <p>如有操作或帳務問題請於上班時間(週一至週五 09:00~17:00)洽財金公司0800-767-168或(02)2630-9555</p>
+            <div class="app-qr">
+                <div class="title">全國繳費網APP</div>
+                <ul>
+                    <li><a href="/Others/Home/HtmlView/URL_AndroidAPP" target="_blank" title="e-bill全國繳費網 Android APP 下載(另開新視窗)"><img src="/Content/Images/qr-android.jpg" alt="e-bill全國繳費網 Android APP 下載"><span>Android</span></a></li>
+                    <li><a href="/Others/Home/HtmlView/URL_iOSAPP" target="_blank" title="e-bill全國繳費網 iOS APP 下載(另開新視窗)"><img src="/Content/Images/qr-ios.jpg" alt="e-bill全國繳費網 iOS APP 下載"><span>iOS</span></a></li>
+                </ul>
+            </div>   
+            <div class="aa_mark">
+                <a href="/Others/Home/HtmlView/URL_AA" target="_blank" title="通過AA檢測等級無障礙網頁檢測(另開新視窗)">
+                    <img src="/Content/Images/aa.png" alt="通過AA檢測等級無障礙網頁檢測">
+                </a>
+            </div>  
+        </div>
+    </div>
+    
+
+    <script>
+        var rootUrl = window.location.origin;
+        function popContent(contentId) {
+            var m_url = '/Home/HtmlView' + "/" + contentId;
+            window.open(m_url, '', 'scrollbars=yes,menubar=no,height=500,width=1000,resizable=yes,toolbar=no,location=_blank,status=no');
+        }
+
+        function noBack() {
+            window.history.forward();
+        }
+        noBack();
+        window.onload = noBack;
+        window.onpageshow = function (evt) { if (evt.persisted) noBack() }
+        window.onunload = function () { void (0) }
+
+    </script>
+</body>
+</html>
