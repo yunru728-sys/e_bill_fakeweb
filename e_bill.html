@@ -2,396 +2,1004 @@
 <html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="referrer" content="no-referrer">
-    <title>服務流程示範｜非官方教學原型</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Bill全國繳費網 - 國道高速公路交通資費</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts 繁體中文 Noto Sans TC 與微軟正黑體設定 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            color-scheme: light;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color: #202b38;
-            background: #f3f6f9;
-            font-synthesis: none;
-            text-rendering: optimizeLegibility;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            min-width: 20rem;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
+            font-family: "Microsoft JhengHei", "微軟正黑體", "Noto Sans TC", sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            font-size: 15px;
         }
-
-        a {
-            color: #174f7a;
-        }
-
-        a:focus-visible,
-        button:focus-visible {
-            outline: 3px solid #d97706;
-            outline-offset: 3px;
-        }
-
-        .container {
-            width: min(100% - 2rem, 64rem);
-            margin-inline: auto;
-        }
-
-        .site-header {
-            background: #fff;
-            border-bottom: 1px solid #d6dee7;
-        }
-
-        .header-inner {
-            min-height: 5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: inherit;
-            font-size: 1.125rem;
-            font-weight: 700;
+        /* 經典台灣金融/政府網站無障礙導盲磚樣式 */
+        .accesskey {
+            color: #666666;
             text-decoration: none;
+            font-size: 13px;
+            padding: 0 3px;
         }
-
-        .brand-mark {
-            width: 2.5rem;
-            aspect-ratio: 1;
-            display: grid;
-            place-items: center;
-            border: 2px solid #174f7a;
-            border-radius: 0.5rem;
-            color: #174f7a;
-            font-size: 1.25rem;
+        .accesskey:focus, .accesskey:hover {
+            background-color: #ffeb3b;
+            color: #000000;
+            outline: 1px dashed #333333;
         }
-
-        .header-note {
-            color: #526170;
-            font-size: 0.9rem;
-        }
-
-        .notice {
-            margin-block: 1rem;
-            padding: 1rem 1.125rem;
-            border: 2px solid #9a5700;
-            border-radius: 0.5rem;
-            background: #fff4d6;
-            color: #422b00;
-            line-height: 1.6;
-        }
-
-        .notice strong {
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        main {
-            flex: 1;
-            padding-block: 1rem 2.5rem;
-        }
-
-        .eyebrow {
-            margin: 0 0 0.5rem;
-            color: #526170;
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-        }
-
-        h1,
-        h2,
-        p {
-            margin-top: 0;
-        }
-
-        h1 {
-            margin-bottom: 0.5rem;
-            color: #173c59;
-            font-size: clamp(1.6rem, 5vw, 2rem);
-        }
-
-        .intro {
-            margin-bottom: 1.5rem;
-            color: #465564;
-            line-height: 1.65;
-        }
-
-        .progress {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.75rem;
-            margin: 0 0 1.25rem;
-            padding: 0;
-            list-style: none;
-        }
-
-        .progress li {
-            padding: 0.75rem;
-            border: 1px solid #cbd5df;
-            border-radius: 0.5rem;
-            background: #fff;
-            color: #526170;
-            text-align: center;
-        }
-
-        .progress li[aria-current="step"] {
-            border-color: #174f7a;
-            background: #eaf3fa;
-            color: #173c59;
-            font-weight: 700;
-        }
-
-        .panel {
-            padding: clamp(1rem, 4vw, 1.5rem);
-            border: 1px solid #cbd5df;
-            border-radius: 0.625rem;
-            background: #fff;
-            box-shadow: 0 0.25rem 1rem rgb(23 60 89 / 8%);
-        }
-
-        .panel h2 {
-            margin-bottom: 0.75rem;
-            color: #173c59;
-            font-size: 1.25rem;
-        }
-
-        .panel p {
-            color: #465564;
-            line-height: 1.65;
-        }
-
-        .sample-table {
-            width: 100%;
-            margin-block: 1.25rem;
+        /* 表單表格邊框與背景 */
+        .ebill-table {
             border-collapse: collapse;
-            text-align: left;
+            width: 100%;
+            border-top: 2px solid #005bac;
+            border-bottom: 1px solid #cccccc;
         }
-
-        .sample-table th,
-        .sample-table td {
-            padding: 0.875rem;
-            border: 1px solid #d6dee7;
-            vertical-align: top;
+        .ebill-table th, .ebill-table td {
+            border: 1px solid #d5dfe8;
+            padding: 12px 16px;
+            vertical-align: middle;
         }
-
-        .sample-table th {
-            width: 34%;
-            background: #f3f6f9;
-        }
-
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        button {
-            min-height: 2.875rem;
-            padding: 0.7rem 1.25rem;
-            border: 1px solid #174f7a;
-            border-radius: 0.375rem;
-            background: #174f7a;
-            color: #fff;
-            font: inherit;
+        .ebill-th {
+            background-color: #f0f5fa;
+            color: #1f3b58;
             font-weight: 700;
-            cursor: pointer;
+            text-align: left;
+            width: 24%;
         }
-
-        button.secondary {
-            background: #fff;
-            color: #174f7a;
-        }
-
-        .status {
-            min-height: 1.5rem;
-            margin: 1rem 0 0;
-            color: #465564;
-            text-align: center;
-        }
-
-        .site-footer {
-            padding-block: 1.25rem;
-            border-top: 1px solid #d6dee7;
-            background: #fff;
-            color: #465564;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .site-footer p {
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 38rem) {
-            .header-inner {
-                align-items: flex-start;
-                flex-direction: column;
-                justify-content: center;
-                padding-block: 0.75rem;
-            }
-
-            .progress {
-                grid-template-columns: 1fr;
-            }
-
-            .sample-table th,
-            .sample-table td {
+        @media (max-width: 768px) {
+            .ebill-th {
+                width: 100%;
                 display: block;
+                border-bottom: none;
+                padding-bottom: 6px;
+            }
+            .ebill-table td {
                 width: 100%;
+                display: block;
+                border-top: none;
+                padding-top: 6px;
             }
-
-            .sample-table td {
-                border-top: 0;
-            }
-
-            .sample-table tr + tr th {
-                border-top: 0;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .actions button {
-                width: 100%;
-            }
+        }
+        /* 流程步驟箭頭與樣式 */
+        .step-box {
+            position: relative;
+            transition: all 0.2s ease;
         }
     </style>
 </head>
-<body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand" href="#main">
-                <span class="brand-mark" aria-hidden="true">D</span>
-                <span>服務流程示範</span>
-            </a>
-            <span class="header-note">互動式教學原型</span>
+<body class="min-h-screen flex flex-col justify-between bg-white">
+
+    <!-- ==================== 1. 頂部頁首區塊 (Top Header Bar) ==================== -->
+    <header class="w-full border-b border-gray-200 bg-white">
+        <div class="max-w-[1040px] mx-auto px-4 pt-3 pb-3">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                
+                <!-- 左側：e-Bill 全國繳費網官方風格 Logo -->
+                <div class="flex items-center">
+                    <a href="#top" onclick="resetToStep1(); return false;" class="flex items-center gap-2.5 group focus:outline-none">
+                        <!-- 仿 e-Bill 藍橘綠交織動態圓弧 SVG 標誌 -->
+                        <svg class="w-12 h-12 flex-shrink-0" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="32" cy="32" r="28" fill="#F4F8FC" stroke="#005BAC" stroke-width="2.5"/>
+                            <!-- 橘色動態弧線 -->
+                            <path d="M12 36C14 20 28 12 44 16C34 17 22 24 19 37C17 44 21 50 28 52C18 52 10 45 12 36Z" fill="#F37021"/>
+                            <!-- 綠色輔助弧線 -->
+                            <path d="M22 48C32 54 47 50 52 38C47 45 36 47 26 43C23 42 20 45 22 48Z" fill="#4CAF50"/>
+                            <!-- 藍色 e 字母核心 -->
+                            <text x="23" y="40" fill="#005BAC" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="30">e</text>
+                        </svg>
+                        <div class="flex flex-col">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-[#005bac] font-extrabold text-2xl tracking-tight leading-none">e-Bill</span>
+                                <span class="text-[#f37021] font-bold text-xl tracking-wide leading-none">全國繳費網</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 tracking-wider mt-1">National Payment Network</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- 右側：無障礙導盲磚、功能導覽列與費用搜尋 -->
+                <div class="flex flex-col items-start md:items-end gap-2">
+                    <!-- 上方小連結列 -->
+                    <nav aria-label="上方功能導覽" class="flex flex-wrap items-center text-[13px] text-[#444444] gap-y-1">
+                        <a href="#U" id="AU" accesskey="U" title="上方功能區" class="accesskey mr-1">:::</a>
+                        <a href="#home" onclick="showNotice('目前位於「國道高速公路交通資費」繳費頁面。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5">回首頁</a>
+                        <span class="text-gray-300">|</span>
+                        <a href="#sitemap" onclick="showNotice('網站導覽：包含各類公共事業費、稅款、交通資費及電信費繳納服務。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5">網站導覽</a>
+                        <span class="text-gray-300">|</span>
+                        <a href="#faq" onclick="showNotice('問題與協助：繳納國道通行費前，請備妥車牌號碼及車主身分證字號或統一編號。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5">問題與協助</a>
+                        <span class="text-gray-300">|</span>
+                        <a href="#env" onclick="showNotice('自我環境檢測：您的瀏覽器環境支援 TLS 1.2 以上加密通訊協定，可正常使用本服務。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5">自我環境檢測</a>
+                        <span class="text-gray-300">|</span>
+                        <a href="#limit" onclick="showNotice('繳費限額說明：使用非約定活期性存款帳戶繳款，單筆限額新臺幣 5 萬元，每日累計限額 10 萬元。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5">繳費限額</a>
+                        <span class="text-gray-300">|</span>
+                        <span class="text-[#005bac] font-medium pl-1.5">費用搜尋</span>
+                    </nav>
+
+                    <!-- 費用搜尋輸入框 -->
+                    <form onsubmit="handleFeeSearch(event)" class="flex items-center gap-1.5">
+                        <label for="feeSearchInput" class="sr-only">費用搜尋關鍵字</label>
+                        <input 
+                            type="text" 
+                            id="feeSearchInput" 
+                            placeholder="請輸入繳費項目關鍵字" 
+                            class="border border-[#cccccc] rounded px-2.5 py-1 text-[13px] w-48 sm:w-56 focus:outline-none focus:border-[#005bac] bg-[#fafafa]"
+                        >
+                        <button 
+                            type="submit" 
+                            class="bg-[#005bac] hover:bg-[#004687] text-white text-[13px] font-medium px-3 py-1 rounded transition-colors cursor-pointer"
+                        >
+                            送出
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 主視覺藍色導覽橫條 -->
+        <div class="w-full bg-gradient-to-r from-[#005bac] via-[#0b6ec5] to-[#005bac] text-white shadow-sm">
+            <div class="max-w-[1040px] mx-auto px-4 py-2 flex items-center justify-between text-[14px]">
+                <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+                    <span class="font-bold text-[#ffd54f] flex items-center gap-1">
+                        <span class="inline-block w-2 h-2 rounded-full bg-[#ffd54f]"></span>
+                        交通資費專區
+                    </span>
+                    <span class="text-blue-200">|</span>
+                    <span class="text-white/95">24小時線上即時查詢與繳費服務</span>
+                </div>
+                <div class="hidden sm:block text-[12px] text-blue-100">
+                    交易安全機制：256-bit SSL 加密傳輸
+                </div>
+            </div>
         </div>
     </header>
 
-    <aside class="container notice" role="note" aria-label="重要聲明">
-        <strong>非官方教學示範，與任何政府、金融機構或服務業者均無關。</strong>
-        本頁只展示一般介面流程，不提供帳單查詢或付款。請勿輸入任何真實個人資料；
-        本示範沒有資料輸入欄位，也不會傳送或儲存你的資料。
-    </aside>
+    <!-- ==================== 2. 頁面標題橫幅與麵包屑區塊 ==================== -->
+    <div class="w-full bg-[#f4f7fa] border-b border-[#dce4ec]">
+        <div class="max-w-[1040px] mx-auto px-4 py-4">
+            <!-- 麵包屑 -->
+            <div class="text-[12px] text-gray-500 mb-2 flex items-center gap-1">
+                <span>現在位置：</span>
+                <a href="#home" onclick="resetToStep1(); return false;" class="hover:text-[#005bac] hover:underline">首頁</a>
+                <span>&gt;</span>
+                <span>交通資費</span>
+                <span>&gt;</span>
+                <span class="text-[#005bac] font-medium">國道高速公路交通資費</span>
+            </div>
 
-    <main id="main" class="container">
-        <p class="eyebrow">EDUCATIONAL PROTOTYPE</p>
-        <h1>服務流程互動示範</h1>
-        <p class="intro">
-            使用虛構內容瀏覽三個介面步驟。範例不代表真實帳單、服務或交易。
-        </p>
+            <!-- 頁面主標題與相關說明按鈕 -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <a href="#C" id="AC" accesskey="C" title="中央內容區" class="accesskey">:::</a>
+                    <div class="w-1.5 h-6 bg-[#f37021] rounded-sm"></div>
+                    <h1 class="text-[22px] sm:text-[24px] font-bold text-[#004488] tracking-wide">
+                        國道高速公路交通資費
+                    </h1>
+                </div>
 
-        <ol class="progress" aria-label="示範步驟">
-            <li id="progress-start" aria-current="step">1. 開始</li>
-            <li id="progress-sample">2. 虛構範例</li>
-            <li id="progress-end">3. 結束</li>
-        </ol>
+                <button 
+                    type="button" 
+                    onclick="toggleModal('relatedInfoModal', true)"
+                    class="inline-flex items-center gap-1.5 bg-white hover:bg-[#eef5fc] text-[#005bac] border border-[#005bac] rounded px-3.5 py-1.5 text-[14px] font-medium shadow-xs transition-colors cursor-pointer"
+                >
+                    <svg class="w-4 h-4 text-[#f37021]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <span>相關說明</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <section id="step-start" class="panel" aria-labelledby="start-title">
-            <h2 id="start-title">開始示範</h2>
-            <p>
-                這是一個純前端的介面展示。按下按鈕只會切換到本頁內的虛構範例，
-                不會連線查詢、收集資料或執行任何交易。
-            </p>
-            <div class="actions">
-                <button type="button" data-next="sample">查看虛構範例</button>
+    <!-- ==================== 3. 主要內容區 (流程進度 + 表單卡片) ==================== -->
+    <main class="flex-grow w-full max-w-[1040px] mx-auto px-4 py-6">
+
+        <!-- 步驟流程進度條 ("流程進度") -->
+        <section aria-label="流程進度" class="mb-6">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between bg-[#f8fafc] border border-[#dce4ec] rounded-md p-3 gap-2">
+                <div class="text-[14px] font-bold text-[#1f3b58] px-2 flex items-center gap-1.5 shrink-0">
+                    <span class="inline-block w-2 h-2 bg-[#005bac] rotate-45"></span>
+                    流程進度：
+                </div>
+
+                <div class="flex-grow grid grid-cols-1 sm:grid-cols-11 items-center gap-2">
+                    <!-- Step 1 -->
+                    <div id="stepBadge1" class="sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#005bac] text-white font-bold text-[15px] shadow-xs border border-[#004687]">
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#f37021] text-white text-[13px] font-extrabold">1</span>
+                        <span>輸入繳費資訊</span>
+                    </div>
+
+                    <!-- Arrow 1 -->
+                    <div class="hidden sm:flex sm:col-span-1 justify-center text-[#005bac] font-bold text-lg select-none">
+                        &gt;
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div id="stepBadge2" class="sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#e9eef3] text-[#666666] font-medium text-[15px] border border-[#d5dfe8]">
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#9aa8b6] text-white text-[13px] font-bold">2</span>
+                        <span>確認頁</span>
+                    </div>
+
+                    <!-- Arrow 2 -->
+                    <div class="hidden sm:flex sm:col-span-1 justify-center text-gray-400 font-bold text-lg select-none">
+                        &gt;
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div id="stepBadge3" class="sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#e9eef3] text-[#666666] font-medium text-[15px] border border-[#d5dfe8]">
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#9aa8b6] text-white text-[13px] font-bold">3</span>
+                        <span>繳費交易結果</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="step-sample" class="panel" aria-labelledby="sample-title" hidden>
-            <h2 id="sample-title">虛構範例明細</h2>
-            <p>以下資料僅為展示介面用途，不對應任何人、帳戶、帳單或實際服務。</p>
-            <table class="sample-table">
-                <tbody>
-                    <tr>
-                        <th scope="row">示範項目</th>
-                        <td>範例服務（虛構）</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">示範編號</th>
-                        <td>DEMO-0001（非真實編號）</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">展示金額</th>
-                        <td>NT$ 0（不是應繳金額）</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">狀態</th>
-                        <td>介面展示中；沒有查詢或付款</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="actions">
-                <button type="button" class="secondary" data-next="start">返回</button>
-                <button type="button" data-next="end">結束示範</button>
+        <!-- 內嵌提示訊息橫幅 (取代 alert) -->
+        <div id="inlineAlertBox" class="hidden mb-4 rounded border-l-4 border-[#d93025] bg-[#fdf2f2] p-3.5 text-[#a51d15] text-[14px] flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-[#d93025] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <span id="inlineAlertMessage">請確認欄位輸入是否正確。</span>
+            </div>
+            <button type="button" onclick="hideInlineAlert()" class="text-gray-500 hover:text-gray-800 text-sm font-bold px-1 cursor-pointer">✕</button>
+        </div>
+
+        <!-- ==================== 步驟一：待繳費用查詢表單卡片 ==================== -->
+        <section id="step1Container" class="bg-white border border-[#cccccc] rounded-md shadow-xs overflow-hidden">
+            <!-- 卡片標頭 -->
+            <div class="bg-[#eef4fa] border-b border-[#d5dfe8] px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="inline-block w-3 h-3 rounded-xs bg-[#005bac]"></span>
+                    <h2 class="text-[17px] font-bold text-[#004488]">待繳費用查詢</h2>
+                </div>
+                <span class="text-[13px] text-gray-600">
+                    標示 <span class="text-[#d93025] font-bold">(必填)</span> 為必須輸入欄位
+                </span>
+            </div>
+
+            <!-- 表單本體 -->
+            <form id="etagQueryForm" onsubmit="handleFormSubmit(event)" novalidate class="p-4 sm:p-6">
+                <table class="ebill-table">
+                    <tbody>
+                        <!-- 第 1 列：車牌號碼(必填) -->
+                        <tr>
+                            <th scope="row" class="ebill-th">
+                                <label for="plateNumber" class="cursor-pointer">
+                                    車牌號碼<span class="text-[#d93025] font-bold ml-0.5">(必填)</span>
+                                </label>
+                            </th>
+                            <td class="bg-white">
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input 
+                                            type="text" 
+                                            id="plateNumber" 
+                                            name="plateNumber"
+                                            maxlength="12"
+                                            placeholder="請輸入車牌號碼"
+                                            autocomplete="off"
+                                            class="border border-[#bbbbbb] rounded px-3 py-1.5 text-[15px] w-full sm:w-64 uppercase focus:outline-none focus:border-[#005bac] focus:ring-2 focus:ring-[#005bac]/20"
+                                        >
+                                        <button 
+                                            type="button" 
+                                            onclick="fillSampleData()" 
+                                            class="text-[12px] text-[#005bac] hover:underline bg-[#f0f6fc] border border-[#c5dcf2] px-2 py-1 rounded cursor-pointer"
+                                            title="自動帶入測試範例資料"
+                                        >
+                                            帶入範例資料
+                                        </button>
+                                    </div>
+                                    <p class="text-[13px] text-[#4a607a] leading-relaxed">
+                                        (車牌號碼請依您的車牌格式完整輸入，註：需包含"<span class="text-[#d93025] font-bold">-</span>" 符號及文字，如: <span class="font-medium text-[#1f3b58]">AB-2468</span>、<span class="font-medium text-[#1f3b58]">135-AB</span>、<span class="font-medium text-[#1f3b58]">使-123</span>。)
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 第 2 列：用戶證號(必填) -->
+                        <tr>
+                            <th scope="row" class="ebill-th">
+                                <label for="userIdNumber" class="cursor-pointer">
+                                    用戶證號<span class="text-[#d93025] font-bold ml-0.5">(必填)</span>
+                                </label>
+                            </th>
+                            <td class="bg-white">
+                                <div class="flex flex-col gap-1.5">
+                                    <input 
+                                        type="text" 
+                                        id="userIdNumber" 
+                                        name="userIdNumber"
+                                        maxlength="10"
+                                        placeholder="請輸入身分證字號或統一編號"
+                                        autocomplete="off"
+                                        class="border border-[#bbbbbb] rounded px-3 py-1.5 text-[15px] w-full sm:w-64 uppercase focus:outline-none focus:border-[#005bac] focus:ring-2 focus:ring-[#005bac]/20"
+                                    >
+                                    <p class="text-[13px] text-[#4a607a] leading-relaxed">
+                                        (此即車牌號碼持有人(法人)的身分證字號(統一編號))
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- 第 3 列：手續費說明 -->
+                        <tr>
+                            <th scope="row" class="ebill-th">
+                                手續費說明
+                            </th>
+                            <td class="bg-white">
+                                <p class="text-[15px] text-[#333333] font-medium">
+                                    非約定活期性存款帳戶繳款，限繳本人帳單，手續費 <span class="text-[#e65100] font-bold text-[16px]">3 元</span>
+                                </p>
+                            </td>
+                        </tr>
+
+                        <!-- 第 4 列：注意事項 -->
+                        <tr>
+                            <th scope="row" class="ebill-th">
+                                注意事項
+                            </th>
+                            <td class="bg-white">
+                                <p class="text-[14px] text-[#d93025] font-medium leading-relaxed">
+                                    本繳費網不適用疫情期間減免ATM跨行轉帳手續費措施，本交易如有手續費，仍須自行負擔。
+                                </p>
+                            </td>
+                        </tr>
+
+                        <!-- 第 5 列：動態圖像驗證碼(必填) -->
+                        <tr>
+                            <th scope="row" class="ebill-th">
+                                <label for="captchaInput" class="cursor-pointer">
+                                    動態圖像驗證碼<span class="text-[#d93025] font-bold ml-0.5">(必填)</span>
+                                </label>
+                            </th>
+                            <td class="bg-white">
+                                <div class="flex flex-col gap-2.5">
+                                    <!-- 驗證碼 Canvas 與語音/重整按鈕 -->
+                                    <div class="flex flex-wrap items-center gap-2.5">
+                                        <div class="border border-[#999999] bg-[#f9f9f9] p-1 rounded inline-flex items-center justify-center shadow-inner">
+                                            <canvas id="captchaCanvas" width="145" height="42" class="block rounded-xs" aria-label="動態圖像驗證碼圖片"></canvas>
+                                        </div>
+
+                                        <div class="flex items-center gap-2">
+                                            <!-- 播放驗證碼按鈕 -->
+                                            <button 
+                                                type="button" 
+                                                onclick="playCaptchaAudio()" 
+                                                class="inline-flex items-center gap-1 bg-[#f4f7fa] hover:bg-[#e3edf7] text-[#005bac] border border-[#b8cce0] rounded px-2.5 py-1.5 text-[13px] font-medium transition-colors cursor-pointer"
+                                                title="語音播放驗證碼數字"
+                                            >
+                                                <svg class="w-4 h-4 text-[#f37021]" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/>
+                                                </svg>
+                                                <span>播放驗證碼</span>
+                                            </button>
+
+                                            <!-- 重新產生按鈕 -->
+                                            <button 
+                                                type="button" 
+                                                onclick="generateCaptcha()" 
+                                                class="inline-flex items-center gap-1 bg-[#f4f7fa] hover:bg-[#e3edf7] text-[#005bac] border border-[#b8cce0] rounded px-2.5 py-1.5 text-[13px] font-medium transition-colors cursor-pointer"
+                                                title="重新產生一組新的驗證碼"
+                                            >
+                                                <svg class="w-4 h-4 text-[#005bac]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                                </svg>
+                                                <span>重新產生</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 驗證碼輸入框與說明 -->
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input 
+                                            type="text" 
+                                            id="captchaInput" 
+                                            name="captchaInput"
+                                            maxlength="6"
+                                            inputmode="numeric"
+                                            placeholder="請輸入驗證碼"
+                                            autocomplete="off"
+                                            class="border border-[#bbbbbb] rounded px-3 py-1.5 text-[15px] w-44 focus:outline-none focus:border-[#005bac] focus:ring-2 focus:ring-[#005bac]/20"
+                                        >
+                                        <span class="text-[13px] text-[#4a607a]">請輸入上圖中您所看到的數字</span>
+                                        <button 
+                                            type="button" 
+                                            onclick="toggleModal('captchaHelpModal', true)"
+                                            class="inline-flex items-center gap-1 text-[13px] text-[#005bac] hover:text-[#f37021] underline font-medium cursor-pointer ml-1"
+                                        >
+                                            <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#005bac] text-white text-[11px] font-bold no-underline">?</span>
+                                            說明
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 底部操作按鈕列 -->
+                <div class="mt-7 flex flex-wrap items-center justify-center gap-4">
+                    <button 
+                        type="button" 
+                        onclick="handleBackClick()"
+                        class="min-w-[130px] bg-[#6c7a89] hover:bg-[#586573] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs transition-colors cursor-pointer"
+                    >
+                        回上一頁
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="min-w-[130px] bg-[#005bac] hover:bg-[#004687] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs border-b-2 border-[#00396e] transition-colors cursor-pointer"
+                    >
+                        確認送出
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ==================== 步驟二：確認頁 (互動式模擬查詢結果) ==================== -->
+        <section id="step2Container" class="hidden bg-white border border-[#cccccc] rounded-md shadow-xs overflow-hidden">
+            <div class="bg-[#eef4fa] border-b border-[#d5dfe8] px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="inline-block w-3 h-3 rounded-xs bg-[#f37021]"></span>
+                    <h2 class="text-[17px] font-bold text-[#004488]">待繳費用明細確認</h2>
+                </div>
+                <span class="text-[13px] text-[#005bac] font-medium">遠通電收 eTag / 國道通行費查詢結果</span>
+            </div>
+
+            <div class="p-4 sm:p-6">
+                <p class="text-[14px] text-gray-700 mb-4">
+                    請確認以下待繳國道通行費帳單資訊，確認無誤後請點選「確認繳費」進行扣款交易：
+                </p>
+
+                <table class="ebill-table mb-6">
+                    <tbody>
+                        <tr>
+                            <th class="ebill-th">繳費項目</th>
+                            <td class="bg-white font-bold text-[#005bac]">國道高速公路交通資費 (遠通電收)</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">車牌號碼</th>
+                            <td id="confirmPlate" class="bg-white font-bold text-[16px]">--</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">用戶證號</th>
+                            <td id="confirmUserId" class="bg-white">--</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">計費期間</th>
+                            <td class="bg-white">115年10月01日 ～ 115年10月31日 (未繳通行費明細)</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">應繳通行費金額</th>
+                            <td class="bg-white font-bold text-[17px] text-[#333333]">新臺幣 <span class="text-[#005bac]">245</span> 元</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">交易手續費</th>
+                            <td class="bg-white font-bold text-[#e65100]">新臺幣 3 元</td>
+                        </tr>
+                        <tr>
+                            <th class="ebill-th">總計扣款金額</th>
+                            <td class="bg-white font-extrabold text-[18px] text-[#d93025]">新臺幣 248 元</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <button 
+                        type="button" 
+                        onclick="resetToStep1()"
+                        class="min-w-[130px] bg-[#6c7a89] hover:bg-[#586573] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs transition-colors cursor-pointer"
+                    >
+                        重新查詢
+                    </button>
+                    <button 
+                        type="button" 
+                        onclick="goToStep3()"
+                        class="min-w-[130px] bg-[#f37021] hover:bg-[#d95e14] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs transition-colors cursor-pointer"
+                    >
+                        確認繳費
+                    </button>
+                </div>
             </div>
         </section>
 
-        <section id="step-end" class="panel" aria-labelledby="end-title" hidden>
-            <h2 id="end-title">示範已結束</h2>
-            <p>
-                本流程沒有查詢真實帳單、處理付款或產生收據。若需使用實際服務，
-                請自行確認服務業者的官方網站與網址。
-            </p>
-            <div class="actions">
-                <button type="button" data-next="start">重新觀看示範</button>
+        <!-- ==================== 步驟三：繳費交易結果 ==================== -->
+        <section id="step3Container" class="hidden bg-white border border-[#cccccc] rounded-md shadow-xs overflow-hidden">
+            <div class="bg-[#eef4fa] border-b border-[#d5dfe8] px-4 py-3 flex items-center gap-2">
+                <span class="inline-block w-3 h-3 rounded-xs bg-[#2e7d32]"></span>
+                <h2 class="text-[17px] font-bold text-[#004488]">繳費交易結果</h2>
+            </div>
+
+            <div class="p-6 text-center">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[#e8f5e9] text-[#2e7d32] mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="text-[20px] font-bold text-[#2e7d32] mb-1">交易完成 (模擬測試交易成功)</h3>
+                <p class="text-[14px] text-gray-600 mb-5">您的國道高速公路交通資費已完成線上繳納，建議您列印或儲存本交易明細收據。</p>
+
+                <div class="max-w-xl mx-auto text-left mb-6">
+                    <table class="ebill-table">
+                        <tbody>
+                            <tr>
+                                <th class="ebill-th">交易序號</th>
+                                <td id="receiptTxId" class="bg-white font-mono text-[14px]">--</td>
+                            </tr>
+                            <tr>
+                                <th class="ebill-th">交易時間</th>
+                                <td id="receiptTime" class="bg-white text-[14px]">--</td>
+                            </tr>
+                            <tr>
+                                <th class="ebill-th">繳費車牌號碼</th>
+                                <td id="receiptPlate" class="bg-white font-bold">--</td>
+                            </tr>
+                            <tr>
+                                <th class="ebill-th">實付總金額</th>
+                                <td class="bg-white font-bold text-[#d93025]">新臺幣 248 元 (含手續費 3 元)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <button 
+                        type="button" 
+                        onclick="window.print()"
+                        class="min-w-[130px] bg-[#6c7a89] hover:bg-[#586573] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs transition-colors cursor-pointer"
+                    >
+                        友善列印
+                    </button>
+                    <button 
+                        type="button" 
+                        onclick="resetToStep1()"
+                        class="min-w-[130px] bg-[#005bac] hover:bg-[#004687] text-white font-bold text-[15px] px-6 py-2.5 rounded shadow-xs transition-colors cursor-pointer"
+                    >
+                        繼續繳納其他費用
+                    </button>
+                </div>
             </div>
         </section>
 
-        <p id="step-status" class="status" role="status" aria-live="polite"></p>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>非官方、非營利教學原型；不提供金融、帳單查詢或付款服務。</p>
+    <!-- ==================== 5. 頁尾區塊 (Footer Section) ==================== -->
+    <footer class="w-full bg-[#f2f5f8] border-t-2 border-[#005bac] mt-8 text-[13px] text-[#444444]">
+        <!-- 頁尾上方連結列 -->
+        <div class="w-full bg-[#e6edf5] border-b border-[#d2dce6]">
+            <div class="max-w-[1040px] mx-auto px-4 py-2.5 flex flex-wrap items-center gap-y-1.5 text-[13px] text-[#1f3b58]">
+                <a href="#Z" id="AZ" accesskey="Z" title="下方功能區" class="accesskey mr-1.5">:::</a>
+                <a href="#ba" onclick="showNotice('中華民國銀行商業同業公會全國聯合會 (The Bankers Association of The Republic of China)'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">中華民國銀行公會</a>
+                <span class="text-gray-400">|</span>
+                <a href="#about" onclick="showNotice('關於e-Bill：由中華民國銀行公會委託財金資訊股份有限公司建置維運之全國性線上繳費平台。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">關於e-Bill</a>
+                <span class="text-gray-400">|</span>
+                <a href="#privacy" onclick="showNotice('隱私權聲明：本網站嚴格保護您的個人資料與交易安全。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">隱私權聲明</a>
+                <span class="text-gray-400">|</span>
+                <a href="#terms" onclick="showNotice('使用聲明：使用本網站繳費服務前，請詳閱相關交易規範與限額說明。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">使用聲明</a>
+                <span class="text-gray-400">|</span>
+                <a href="#pdpa" onclick="showNotice('個人資料保護法告知義務內容：依個資法第8條規定告知蒐集目的與資料利用範圍。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">個人資料保護法告知義務內容</a>
+                <span class="text-gray-400">|</span>
+                <a href="#security" onclick="showNotice('網路安全提醒：請勿點擊不明簡訊連結，並確認網址為 https://ebill.ba.org.tw/。'); return false;" class="hover:text-[#005bac] hover:underline px-1.5 font-medium">網路安全提醒</a>
+            </div>
+        </div>
+
+        <!-- 頁尾主體資訊：左側版權客服 + 右側 APP 下載與無障礙標章 -->
+        <div class="max-w-[1040px] mx-auto px-4 py-5">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                
+                <!-- 左側/中央：版權宣告與客服聯絡資訊 -->
+                <div class="space-y-1.5 text-[13px] leading-relaxed text-[#444444]">
+                    <p class="font-medium text-[#222222]">
+                        全國繳費網版權所有轉載必究© 2016 ALL RIGHT RESERVED. 本網站委託財金資訊股份有限公司維運
+                    </p>
+                    <p>
+                        如有任何問題或建議請至<a href="#feedback" onclick="showNotice('意見信箱：歡迎透過財金資訊股份有限公司客服管道反映您的寶貴意見。'); return false;" class="text-[#005bac] underline hover:text-[#f37021] font-medium mx-0.5">意見信箱</a>留下您寶貴的意見
+                    </p>
+                    <p>
+                        如有操作或帳務問題請於上班時間(週一至週五09:00~17:00)洽財金公司 <span class="font-bold text-[#005bac]">0800-767-168</span> 或 <span class="font-bold text-[#005bac]">(02)2630-9555</span>
+                    </p>
+                </div>
+
+                <!-- 右側：全國繳費網 APP 下載與無障礙 AA 標章 -->
+                <div class="flex flex-wrap items-center gap-4 shrink-0">
+                    <!-- APP 下載區 -->
+                    <div class="bg-white border border-[#d5dfe8] rounded px-3 py-2 flex items-center gap-3 shadow-2xs">
+                        <div class="text-[12px] font-bold text-[#005bac] leading-tight border-r border-gray-200 pr-2.5">
+                            全國繳費網<br><span class="text-[#f37021] text-[14px]">APP</span>
+                        </div>
+
+                        <!-- Android APP -->
+                        <a href="#android" onclick="showNotice('e-bill全國繳費網 Android APP 下載 (Google Play 商店)'); return false;" class="flex items-center gap-2 group hover:opacity-85">
+                            <!-- 簡易 QR Code SVG -->
+                            <svg class="w-10 h-10 border border-gray-300 p-0.5 bg-white shrink-0" viewBox="0 0 36 36" fill="#222">
+                                <rect x="2" y="2" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="5" y="5" width="4" height="4"/>
+                                <rect x="24" y="2" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="27" y="5" width="4" height="4"/>
+                                <rect x="2" y="24" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="5" y="27" width="4" height="4"/>
+                                <rect x="15" y="4" width="3" height="3"/><rect x="19" y="8" width="3" height="3"/>
+                                <rect x="15" y="15" width="6" height="6"/><rect x="4" y="15" width="4" height="3"/>
+                                <rect x="24" y="16" width="4" height="4"/><rect x="16" y="25" width="4" height="4"/>
+                                <rect x="25" y="25" width="7" height="7"/>
+                            </svg>
+                            <div class="text-[11px] leading-tight">
+                                <span class="block text-gray-500">e-bill全國繳費網</span>
+                                <span class="font-bold text-[#2e7d32] group-hover:underline">Android APP 下載</span>
+                            </div>
+                        </a>
+
+                        <!-- iOS APP -->
+                        <a href="#ios" onclick="showNotice('e-bill全國繳費網 iOS APP 下載 (App Store)'); return false;" class="flex items-center gap-2 group hover:opacity-85 border-l border-gray-200 pl-2.5">
+                            <!-- 簡易 QR Code SVG -->
+                            <svg class="w-10 h-10 border border-gray-300 p-0.5 bg-white shrink-0" viewBox="0 0 36 36" fill="#222">
+                                <rect x="2" y="2" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="5" y="5" width="4" height="4"/>
+                                <rect x="24" y="2" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="27" y="5" width="4" height="4"/>
+                                <rect x="2" y="24" width="10" height="10" fill="none" stroke="#222" stroke-width="2"/>
+                                <rect x="5" y="27" width="4" height="4"/>
+                                <rect x="16" y="3" width="4" height="4"/><rect x="14" y="10" width="3" height="3"/>
+                                <rect x="18" y="16" width="4" height="4"/><rect x="6" y="16" width="5" height="3"/>
+                                <rect x="26" y="15" width="5" height="3"/><rect x="15" y="26" width="5" height="5"/>
+                                <rect x="24" y="24" width="4" height="4"/><rect x="29" y="28" width="4" height="4"/>
+                            </svg>
+                            <div class="text-[11px] leading-tight">
+                                <span class="block text-gray-500">e-bill全國繳費網</span>
+                                <span class="font-bold text-[#005bac] group-hover:underline">iOS APP 下載</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 台灣政府無障礙網頁 AA 標章 -->
+                    <a 
+                        href="#accessibility" 
+                        onclick="showNotice('本網站已通過無障礙網頁開發規範 AA 檢測等級認證。'); return false;"
+                        title="無障礙網站 (另開視窗)"
+                        class="inline-flex items-center bg-[#004d99] text-white rounded overflow-hidden border border-[#003366] shadow-2xs hover:opacity-95"
+                    >
+                        <div class="bg-[#ff9800] text-[#111111] font-extrabold text-[15px] px-2.5 py-2 leading-none flex flex-col items-center justify-center">
+                            <span>AA</span>
+                            <span class="text-[9px] font-bold mt-0.5">無障礙</span>
+                        </div>
+                        <div class="px-2.5 py-1.5 text-[11px] leading-tight">
+                            <div class="font-bold text-white">通過AA檢測等級</div>
+                            <div class="text-blue-100">無障礙網頁檢測</div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
         </div>
     </footer>
 
+    <!-- ==================== 彈跳視窗 1：相關說明 Modal ==================== -->
+    <div id="relatedInfoModal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="relatedModalTitle">
+        <div class="bg-white rounded-md shadow-lg max-w-lg w-full border border-[#005bac] overflow-hidden">
+            <div class="bg-[#005bac] text-white px-4 py-3 flex items-center justify-between">
+                <h3 id="relatedModalTitle" class="font-bold text-[16px]">國道高速公路交通資費 - 相關說明</h3>
+                <button type="button" onclick="toggleModal('relatedInfoModal', false)" class="text-white hover:text-gray-200 font-bold text-lg cursor-pointer">✕</button>
+            </div>
+            <div class="p-5 text-[14px] text-gray-700 space-y-3 leading-relaxed max-h-[75vh] overflow-y-auto">
+                <p><strong class="text-[#005bac]">1. 適用對象：</strong>本服務提供查詢及繳納遠通電收國道高速公路通行費（含 eTag 欠費及非 eTag 用路人通行費）。</p>
+                <p><strong class="text-[#005bac]">2. 繳費方式：</strong>可使用本人之「晶片金融卡」（需搭配讀卡機）或「非約定活期性存款帳戶」進行線上即時轉帳繳費。</p>
+                <p><strong class="text-[#005bac]">3. 車牌輸入規則：</strong>請務必包含英數字之間的連字號「-」，例如：<code class="bg-gray-100 px-1 rounded">ABC-1234</code>、<code class="bg-gray-100 px-1 rounded">123-AB</code>。</p>
+                <p><strong class="text-[#005bac]">4. 手續費標準：</strong>每筆交易手續費新臺幣 <span class="text-[#e65100] font-bold">3 元</span>，由繳款人自行負擔。</p>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right border-t border-gray-200">
+                <button type="button" onclick="toggleModal('relatedInfoModal', false)" class="bg-[#005bac] hover:bg-[#004687] text-white text-[14px] font-medium px-5 py-1.5 rounded cursor-pointer">
+                    關閉視窗
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 彈跳視窗 2：驗證碼說明 Modal ==================== -->
+    <div id="captchaHelpModal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="captchaHelpTitle">
+        <div class="bg-white rounded-md shadow-lg max-w-md w-full border border-[#005bac] overflow-hidden">
+            <div class="bg-[#005bac] text-white px-4 py-3 flex items-center justify-between">
+                <h3 id="captchaHelpTitle" class="font-bold text-[16px]">動態圖像驗證碼說明</h3>
+                <button type="button" onclick="toggleModal('captchaHelpModal', false)" class="text-white hover:text-gray-200 font-bold text-lg cursor-pointer">✕</button>
+            </div>
+            <div class="p-5 text-[14px] text-gray-700 space-y-2.5 leading-relaxed">
+                <p>為防止自動化程式惡意查詢，請輸入驗證碼圖片中顯示的 <strong>5 位阿拉伯數字</strong>。</p>
+                <ul class="list-disc pl-5 space-y-1 text-[13px] text-gray-600">
+                    <li>若無法辨識圖片中的數字，請點選「<strong>重新產生</strong>」按鈕更換一組新驗證碼。</li>
+                    <li>視障朋友或需要語音輔助者，可點選「<strong>播放驗證碼</strong>」聆聽數字語音播報。</li>
+                </ul>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right border-t border-gray-200">
+                <button type="button" onclick="toggleModal('captchaHelpModal', false)" class="bg-[#005bac] hover:bg-[#004687] text-white text-[14px] font-medium px-5 py-1.5 rounded cursor-pointer">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 彈跳視窗 3：系統提示訊息 Modal ==================== -->
+    <div id="systemNoticeModal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="bg-white rounded-md shadow-lg max-w-md w-full border border-[#005bac] overflow-hidden">
+            <div class="bg-[#005bac] text-white px-4 py-2.5 flex items-center justify-between">
+                <h3 class="font-bold text-[15px]">e-Bill 全國繳費網系統提示</h3>
+                <button type="button" onclick="toggleModal('systemNoticeModal', false)" class="text-white hover:text-gray-200 font-bold cursor-pointer">✕</button>
+            </div>
+            <div class="p-5 text-[14px] text-gray-800 leading-relaxed" id="systemNoticeText">
+                提示內容
+            </div>
+            <div class="bg-gray-50 px-4 py-2.5 text-center border-t border-gray-200">
+                <button type="button" onclick="toggleModal('systemNoticeModal', false)" class="bg-[#005bac] hover:bg-[#004687] text-white text-[14px] font-medium px-6 py-1.5 rounded cursor-pointer">
+                    確定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JavaScript 互動與驗證碼邏輯 ==================== -->
     <script>
-        const stepNames = ["start", "sample", "end"];
-        const stepLabels = {
-            start: "開始示範",
-            sample: "虛構範例",
-            end: "示範已結束"
-        };
+        let currentCaptchaCode = "";
 
-        function showStep(nextStep) {
-            for (const step of stepNames) {
-                document.getElementById(`step-${step}`).hidden = step !== nextStep;
+        /**
+         * 產生經典台灣金融網站風格的 5 位數動態圖像驗證碼 (HTML5 Canvas)
+         */
+        function generateCaptcha() {
+            const canvas = document.getElementById("captchaCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const width = canvas.width;
+            const height = canvas.height;
 
-                const progressItem = document.getElementById(`progress-${step}`);
-                if (step === nextStep) {
-                    progressItem.setAttribute("aria-current", "step");
-                } else {
-                    progressItem.removeAttribute("aria-current");
-                }
+            // 產生 5 位隨機數字
+            let code = "";
+            for (let i = 0; i < 5; i++) {
+                code += Math.floor(Math.random() * 10).toString();
+            }
+            currentCaptchaCode = code;
+
+            // 1. 填充底色 (微帶灰藍的淺色背景)
+            ctx.fillStyle = "#f2f6fa";
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. 繪製干擾背景線條
+            const lineColors = ["#a0b8d0", "#c49a84", "#8fb399", "#b0a4c8"];
+            for (let i = 0; i < 6; i++) {
+                ctx.strokeStyle = lineColors[i % lineColors.length];
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * width, Math.random() * height);
+                ctx.bezierCurveTo(
+                    Math.random() * width, Math.random() * height,
+                    Math.random() * width, Math.random() * height,
+                    Math.random() * width, Math.random() * height
+                );
+                ctx.stroke();
             }
 
-            document.getElementById("step-status").textContent = stepLabels[nextStep];
-            document.getElementById(`step-${nextStep}`).querySelector("h2").focus();
+            // 3. 繪製干擾噪點
+            for (let i = 0; i < 45; i++) {
+                ctx.fillStyle = lineColors[i % lineColors.length];
+                ctx.beginPath();
+                ctx.arc(Math.random() * width, Math.random() * height, 1.1, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 4. 繪製扭曲旋轉的數字
+            const digitColors = ["#004488", "#1b5e20", "#8e24aa", "#b71c1c", "#004d40"];
+            for (let i = 0; i < code.length; i++) {
+                const char = code[i];
+                ctx.save();
+                const x = 18 + i * 24;
+                const y = 28 + (Math.random() * 6 - 3);
+                const angle = (Math.random() - 0.5) * 0.45; // -0.22 ~ +0.22 弧度旋轉
+
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.font = "bold 24px 'Courier New', monospace";
+                ctx.fillStyle = digitColors[i % digitColors.length];
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+            }
+        }
+
+        /**
+         * 使用 Web Speech API 語音播放驗證碼數字
+         */
+        function playCaptchaAudio() {
+            if (!currentCaptchaCode) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                // 將數字拆開朗讀，避免唸成「幾萬幾千」
+                const digitsSpoken = currentCaptchaCode.split('').join('，');
+                const utterance = new SpeechSynthesisUtterance("驗證碼數字為：" + digitsSpoken);
+                utterance.lang = "zh-TW";
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showNotice("您的瀏覽器不支援語音合成播放功能，請直接檢視驗證碼圖片或點選重新產生。");
+            }
+        }
+
+        /**
+         * 帶入測試範例資料方便體驗
+         */
+        function fillSampleData() {
+            document.getElementById("plateNumber").value = "ABC-1234";
+            document.getElementById("userIdNumber").value = "A123456789";
+            document.getElementById("captchaInput").value = currentCaptchaCode;
+            hideInlineAlert();
+        }
+
+        /**
+         * 顯示內嵌錯誤提示橫幅
+         */
+        function showInlineAlert(msg) {
+            const box = document.getElementById("inlineAlertBox");
+            const text = document.getElementById("inlineAlertMessage");
+            text.textContent = msg;
+            box.classList.remove("hidden");
+            box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        function hideInlineAlert() {
+            document.getElementById("inlineAlertBox").classList.add("hidden");
+        }
+
+        /**
+         * 驗證並送出查詢表單
+         */
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            hideInlineAlert();
+
+            const plate = document.getElementById("plateNumber").value.trim().toUpperCase();
+            const userId = document.getElementById("userIdNumber").value.trim().toUpperCase();
+            const captcha = document.getElementById("captchaInput").value.trim();
+
+            if (!plate) {
+                showInlineAlert("請輸入「車牌號碼(必填)」！");
+                document.getElementById("plateNumber").focus();
+                return;
+            }
+            if (!plate.includes("-")) {
+                showInlineAlert("車牌號碼格式錯誤：需包含「-」符號及文字，例如：AB-2468、135-AB。");
+                document.getElementById("plateNumber").focus();
+                return;
+            }
+            if (!userId) {
+                showInlineAlert("請輸入「用戶證號(必填)」(身分證字號或統一編號)！");
+                document.getElementById("userIdNumber").focus();
+                return;
+            }
+            if (userId.length < 8) {
+                showInlineAlert("用戶證號格式不正確，請輸入完整身分證字號(10碼)或統一編號(8碼)。");
+                document.getElementById("userIdNumber").focus();
+                return;
+            }
+            if (!captcha) {
+                showInlineAlert("請輸入「動態圖像驗證碼(必填)」！");
+                document.getElementById("captchaInput").focus();
+                return;
+            }
+            if (captcha !== currentCaptchaCode) {
+                showInlineAlert("動態圖像驗證碼輸入錯誤，請重新輸入！");
+                document.getElementById("captchaInput").value = "";
+                generateCaptcha();
+                document.getElementById("captchaInput").focus();
+                return;
+            }
+
+            // 驗證通過，切換至步驟 2 (確認頁)
+            document.getElementById("confirmPlate").textContent = plate;
+            document.getElementById("confirmUserId").textContent = userId.slice(0, 3) + "****" + userId.slice(-3);
+
+            document.getElementById("step1Container").classList.add("hidden");
+            document.getElementById("step2Container").classList.remove("hidden");
+            document.getElementById("step3Container").classList.add("hidden");
+
+            updateStepIndicators(2);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        document.querySelectorAll("button[data-next]").forEach((button) => {
-            button.addEventListener("click", () => showStep(button.dataset.next));
-        });
+        /**
+         * 切換至步驟 3 (繳費交易結果)
+         */
+        function goToStep3() {
+            const plate = document.getElementById("confirmPlate").textContent;
+            const now = new Date();
+            const pad = (n) => n.toString().padStart(2, '0');
+            const timeStr = `${now.getFullYear()}/${pad(now.getMonth()+1)}/${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            const txId = "EB" + now.getFullYear().toString().slice(-2) + pad(now.getMonth()+1) + pad(now.getDate()) + Math.floor(100000 + Math.random() * 900000);
 
-        document.querySelectorAll("main section h2").forEach((heading) => {
-            heading.tabIndex = -1;
+            document.getElementById("receiptTxId").textContent = txId;
+            document.getElementById("receiptTime").textContent = timeStr;
+            document.getElementById("receiptPlate").textContent = plate;
+
+            document.getElementById("step1Container").classList.add("hidden");
+            document.getElementById("step2Container").classList.add("hidden");
+            document.getElementById("step3Container").classList.remove("hidden");
+
+            updateStepIndicators(3);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /**
+         * 重設並回到步驟 1
+         */
+        function resetToStep1() {
+            hideInlineAlert();
+            document.getElementById("captchaInput").value = "";
+            generateCaptcha();
+
+            document.getElementById("step1Container").classList.remove("hidden");
+            document.getElementById("step2Container").classList.add("hidden");
+            document.getElementById("step3Container").classList.add("hidden");
+
+            updateStepIndicators(1);
+        }
+
+        /**
+         * 更新上方 3 步驟進度條視覺狀態
+         */
+        function updateStepIndicators(activeStep) {
+            for (let i = 1; i <= 3; i++) {
+                const badge = document.getElementById("stepBadge" + i);
+                const circle = badge.querySelector("span:first-child");
+                if (i === activeStep) {
+                    badge.className = "sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#005bac] text-white font-bold text-[15px] shadow-xs border border-[#004687]";
+                    circle.className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#f37021] text-white text-[13px] font-extrabold";
+                } else if (i < activeStep) {
+                    badge.className = "sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#e3effa] text-[#005bac] font-bold text-[15px] border border-[#b8d4ee]";
+                    circle.className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#005bac] text-white text-[13px] font-bold";
+                } else {
+                    badge.className = "sm:col-span-3 flex items-center justify-center gap-2 py-2 px-3 rounded bg-[#e9eef3] text-[#666666] font-medium text-[15px] border border-[#d5dfe8]";
+                    circle.className = "inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#9aa8b6] text-white text-[13px] font-bold";
+                }
+            }
+        }
+
+        /**
+         * 回上一頁按鈕處理
+         */
+        function handleBackClick() {
+            showNotice("已為您保留目前頁面狀態（若於正式網站點選「回上一頁」將返回交通資費項目選單）。");
+        }
+
+        /**
+         * 頂部費用搜尋處理
+         */
+        function handleFeeSearch(event) {
+            event.preventDefault();
+            const kw = document.getElementById("feeSearchInput").value.trim();
+            if (!kw) {
+                showNotice("請輸入欲搜尋的繳費項目關鍵字（例如：國道、水費、電費、電信費）。");
+                return;
+            }
+            showNotice(`搜尋關鍵字「${kw}」：目前您已位於「國道高速公路交通資費」繳費服務頁面。`);
+        }
+
+        /**
+         * 控制彈跳視窗開關
+         */
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            if (show) {
+                modal.classList.remove("hidden");
+            } else {
+                modal.classList.add("hidden");
+            }
+        }
+
+        function showNotice(message) {
+            document.getElementById("systemNoticeText").textContent = message;
+            toggleModal("systemNoticeModal", true);
+        }
+
+        // 頁面載入完成後初始化驗證碼
+        window.addEventListener("DOMContentLoaded", () => {
+            generateCaptcha();
         });
     </script>
 </body>
